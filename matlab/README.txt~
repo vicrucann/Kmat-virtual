@@ -1,3 +1,2 @@
-To compare stability of K parameters for our software and state-of-art-software, run the two scripts: 'run_generate_synth_ellip2.m' - our method and 'run_generate_synth_point2.m' - another method. In both, it is possible to extract the deviation when noise=0 and distortion=0 (refer to *_std variables at the end).
-
-PreciseCameraCalibration folder contains state-of-art calibration software which is built upon Bouget Calibration Toolbox for Matlab.
+To calculate stability of K parameters for our method, run 'run_generate_synth_ellip2.m'. 
+Extract the deviation when noise=0 and distortion=0 (refer to *_std variables at the end).
