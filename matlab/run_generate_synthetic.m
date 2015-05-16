@@ -26,18 +26,18 @@ he_pix = 2592/3;
 WI_pix = wi_pix * scale; % for the pattern
 HE_pix = he_pix * scale;
 
-ncircleX = 14; ncircleY = 10;
+ncircleX = 14; ncircleY = 10; % number of circles in X and Y directions
 ncircle = ncircleX*ncircleY;
 dX = 3.0; dY = 3.0;
-CM1 = 100;
+CM1 = 100; % number of pixerls per CM
 MM1 = CM1/10;
 WI = dX*ncircleX; HE = dY*ncircleY; % in cm
 RADI = min(dX,dY)/3; % cm
-begin = 0;
+begin = 0; % pixel indexation starts from 0
 DELTA = 0; delta = DELTA/scale;
 XC = 0.5*(dX^2-begin)/(dX-begin) + DELTA;
 YC = 0.5*(dY^2-begin)/(dY-begin) + DELTA;
-x_kpts = (0 : dX : WI-dX);
+x_kpts = (0 : dX : WI-dX); % keypoint coords
 y_kpts = (0 : dY : HE-dY);
 
 %scale_cm2pix = floor(min(WI_pix/(CM1*WI), HE_pix/(CM1*HE)))*CM1;
