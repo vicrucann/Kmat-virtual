@@ -119,7 +119,7 @@ namespace libNumerics {
 		/// Sort SVD by decreasing order of singular value.
 		void sort()
 		{
-			std::vector<SVDElement<T>> vec;
+			std::vector<SVDElement<T> > vec;
 			for(int i=0; i < D.nrow(); i++)
 				vec.push_back( SVDElement<T>(D, i) );
 			std::sort(vec.begin(), vec.end());

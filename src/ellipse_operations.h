@@ -51,7 +51,7 @@ matrix<T> rotateCircle(const matrix<T>& S, const matrix<T>& H) {
 }
 
 template <typename T>
-void rotateVirtualImg(std::vector<matrix<T>>& S, matrix<T>& H0, matrix<T>& CH0S, matrix<T>& H0CS)
+void rotateVirtualImg(std::vector<matrix<T> >& S, matrix<T>& H0, matrix<T>& CH0S, matrix<T>& H0CS)
 {
 	int nellip = S.size(); 
 	for (int i = 0; i < nellip; i++)

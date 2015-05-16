@@ -46,7 +46,7 @@ matrix<T> composevij(matrix<T>& H, int i, int j) {
 
 
 template <typename T>
-matrix<T> extractKfromH(std::vector<matrix<T>> H)
+matrix<T> extractKfromH(std::vector<matrix<T> > H)
 {
 	int n = H.size();
 	if (n < 3)

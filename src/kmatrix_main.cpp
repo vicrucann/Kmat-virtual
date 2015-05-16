@@ -58,7 +58,7 @@ vector<T> mat2vec(matrix<T>& m, int l) {
 }
 
 template <typename T>
-std::vector<matrix<T>> virtualImage(T ncirclex, T ncircley, T x_cm, T y_cm, 
+std::vector<matrix<T> > virtualImage(T ncirclex, T ncircley, T x_cm, T y_cm, 
 	T cm1, T scale)
 {
 	int WI = x_cm*scale*cm1;
@@ -70,7 +70,7 @@ std::vector<matrix<T>> virtualImage(T ncirclex, T ncircley, T x_cm, T y_cm,
 	T XC = 0.5*(stepX*stepX-begin)/(stepX-begin) + DELTA;
 	T YC = 0.5*(stepY*stepY-begin)/(stepY-begin) + DELTA;
 	int ncircle = ncirclex*ncircley;
-	std::vector<matrix<T>> S(ncircle);
+	std::vector<matrix<T> > S(ncircle);
 	int cnt = 0;
 	for (int j = 0; j < HE; j=j+stepY) {
 		for (int i = 0; i < WI; i=i+stepX) {
@@ -84,7 +84,7 @@ std::vector<matrix<T>> virtualImage(T ncirclex, T ncircley, T x_cm, T y_cm,
 }
 
 template <typename T>
-std::vector<matrix<T>> buildCameras(matrix<T> &K0, T scale, T cm1)
+std::vector<matrix<T> > buildCameras(matrix<T> &K0, T scale, T cm1)
 {
 	int nimage = 3;
 	T alpha = 1250*scale, beta = 900*scale; 
@@ -92,7 +92,7 @@ std::vector<matrix<T>> buildCameras(matrix<T> &K0, T scale, T cm1)
 	T u0 = 255*scale, v0 = 255*scale;
 	matrix<T> K = groundK(alpha,beta,gamma,u0,v0);
 	K0.paste(0,0,K);
-	std::vector<matrix<T>> H(nimage);
+	std::vector<matrix<T> > H(nimage);
 	H[0] = groundH(K, 20*RAD, 0*RAD, 0*RAD, -9*cm1*scale, -12.5*cm1*scale, 50*cm1*scale); 
 	H[1] = groundH(K, 0*RAD, 20*RAD, 0*RAD, -9*cm1*scale, -12.5*cm1*scale, 51*cm1*scale); 
 	T ctmp = 1/std::sqrt((double)5);
@@ -102,12 +102,12 @@ std::vector<matrix<T>> buildCameras(matrix<T> &K0, T scale, T cm1)
 }
 
 template <typename T>
-matrix<T> extractK(std::vector<matrix<T>>& S, T scale, T cm1, T x_cm, T y_cm, T tolFun)
+matrix<T> extractK(std::vector<matrix<T> >& S, T scale, T cm1, T x_cm, T y_cm, T tolFun)
 {
 	int WI = x_cm*scale*cm1, HE = y_cm*scale*cm1;
 	int wi = 512*scale, he = 512*scale;
 	matrix<T> K0(3,3);
-	std::vector<matrix<T>> H = buildCameras(K0, scale, cm1);
+	std::vector<matrix<T> > H = buildCameras(K0, scale, cm1);
 	int nimage = H.size();
 	int ncircle = S.size();
 	matrix<T> XY(2,ncircle);
@@ -118,8 +118,8 @@ matrix<T> extractK(std::vector<matrix<T>>& S, T scale, T cm1, T x_cm, T y_cm, T 
 		XY(1,i) = y;
 	}
 
-	std::vector<matrix<T>> H_ellip(nimage);
-	std::vector<matrix<T>> H_point(nimage);
+	std::vector<matrix<T> > H_ellip(nimage);
+	std::vector<matrix<T> > H_point(nimage);
 
 	// calculate homographies through minimization of d|CHS-CH0S|
 	for (int i = 0; i < nimage; i++) {
@@ -132,7 +132,8 @@ matrix<T> extractK(std::vector<matrix<T>>& S, T scale, T cm1, T x_cm, T y_cm, T 
 		H_point[i] = H_ini;
 		LMhomography<T> HeLMA(S, UV);
 		vector<T> trgData = vector<T>::zeros(ncircle);
-		vector<T> h_ = mat2vec(H_ini.inv(),9);
+        matrix<T> H_ini_inv = H_ini.inv();
+		vector<T> h_ = mat2vec(H_ini_inv,9);
 		T rmse_ellip = HeLMA.minimize(h_, trgData, tolFun);
 		matrix<T> H_fin = (vec2mat(h_,3,3)).inv(); 
 		H_ellip[i] = H_fin;
@@ -161,7 +162,7 @@ int main(int argc, char ** argv)
 	int cm1 = 50;
 	int scale = 4;
 	int ncirclex = 10, ncircley = 14;
-	std::vector<matrix<double>> S = virtualImage<double>(ncirclex, ncircley, x_cm, y_cm, cm1, scale);
+	std::vector<matrix<double> > S = virtualImage<double>(ncirclex, ncircley, x_cm, y_cm, cm1, scale);
 	matrix<double> K = extractK<double>(S, scale, cm1, x_cm, y_cm, 0.000001);
 	
 	return 0;

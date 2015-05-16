@@ -28,7 +28,7 @@ using namespace libNumerics;
 
 // HCS == H0CS
 template <typename T>
-T evaluateHomography(matrix<T> &H, std::vector<matrix<T>> &S, matrix<T> &H0CS) 
+T evaluateHomography(matrix<T> &H, std::vector<matrix<T> > &S, matrix<T> &H0CS) 
 {
 	int n = S.size();
 	vector<T> error(n);
@@ -166,7 +166,7 @@ T errorShape(const matrix<T>& H, const matrix<T>& S, T u, T v) {
 }
 
 template <typename T>
-void jacdif(const vector<T>& P, const std::vector<matrix<T>>& S, matrix<T>& J, matrix<T> UV)
+void jacdif(const vector<T>& P, const std::vector<matrix<T> >& S, matrix<T>& J, matrix<T> UV)
 {
 	T EPS = 0.0001;
 	matrix<T> H(3,3);
@@ -194,13 +194,13 @@ void jacdif(const vector<T>& P, const std::vector<matrix<T>>& S, matrix<T>& J, m
 template <typename T>
 class LMhomography : public MinLM<T> {
 public:	
-	LMhomography(std::vector<matrix<T>>& s, matrix<T>& uv) {
+	LMhomography(std::vector<matrix<T> >& s, matrix<T>& uv) {
 		S = s;
 		UV = uv;
 	}
 private:
 	matrix<T> Hini;
-	std::vector<matrix<T>> S;
+	std::vector<matrix<T> > S;
 	matrix<T> UV;
 public:
 	virtual void modelData(const vector<T>& P, vector<T>& ymodel) const
