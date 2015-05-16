@@ -1,5 +1,10 @@
 # User defined files
 *~
+CMakeCache.txt
+Kmatrix
+Makefile
+*.cmake
+CMakeFiles
 
 # Compiled Object files
 *.slo
